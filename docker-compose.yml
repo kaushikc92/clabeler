@@ -1,0 +1,22 @@
+version: "3"
+
+networks:
+  labeler-net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres
+    networks:
+      - labeler-net
+    ports:
+      - "5432:5432"
+  labeler:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    networks:
+      - labeler-net
+    depends_on:
+      - db

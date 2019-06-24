@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load i18n widget_tweaks %}
+{% load bootstrap3 %}
+{% load static %}
+{% load filters %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/cmbreadcrumb.css' %}">
+</head>
+<div class="row" style="padding-top: 10px" xmlns="http://www.w3.org/1999/html">
+    <div style="display: none">
+        <div id="assignment_id">{{ assignment_id }}</div>
+        <div id="num_pairs">{{ num_pairs }}</div>
+        <div id="pair_id">{{ pair_id }}</div>
+    </div>
+    <div class="col-md-12" style="margin-top: 2px">
+        <div class="panel panel-default ">
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span id="comment-close" class="close" onclick="onModalCancelClicked();">&times;</span>
+                    <p>Tuple pairs:</p>
+                    <div id="divCommentTable" class="mydiv"></div>
+                    <div id="comment_div" style="visibility: hidden">
+                        <p>Enter your comments:</p>
+                        <input type="text" id="uname" name="name" placeholder="Comments" style="width: 80%">
+                        <input type="button" style="font-size: medium; height: 40px;" name="SaveButton" id="save_comment" value="comment" class="btn btn-success">
+                    </div>
+                    <div id="tag_div" style="visibility: hidden">
+                      <p>Add a tag for the pair</p>
+                  </div>
+              </div>
+          </div>
+
+          <div style="margin:5px;padding:5px; background-color: #F5F5F5;">
+            <div class="panel-heading">
+                <div class="panel-title pull-left">
+                    <h4>
+                        {{ panel_label }}(<i id="done_count">{{done_count|add:1}}</i> / <i id="total_count">{{total_count}}</i> )
+                    </h4>
+                    <div>Do these pairs refer to the same real world entity?</div>
+                </div>
+
+                <div class="panel-title pull-right">
+                    <table style="margin-right: 5px">
+                        <tr>
+                            <td style="padding: 5px;"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td>
+                            <td style="padding: 5px;">Yes</td>
+                            <td id="true_label_count" style="padding: 5px;">{{ true_label_count }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+                            <td style="padding: 5px;">No</td>
+                            <td id="false_label_count" style="padding: 5px;">{{ false_label_count }}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+                            <td style="padding: 5px;">Unsure</td>
+                            <td id="unsure_label_count" style="padding: 5px;">{{ unsure_label_count }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="panel-title pull-right" style="overflow: auto;height: 150px;width:150px;float: right;margin-right:5px;">
+                    <p style="text-align: center;">Filter attributes</p>
+                    {% for column in headers.0 %}
+                    <input type="checkbox" checked="checked" name="checkbox" value="{{ column }}" onchange='onCheckBoxChecked();'>{{ column }}<br>
+                    {% endfor %}
+                </div>
+                <div class="panel-title pull-right" style="width: 250px;padding:2px;overflow:auto;float: right;margin-right:5px;">
+                    <p style="text-align: left">Display mode for tuple pairs</p>
+                    <input type="radio" name="table" value="horizontal" checked="checked" onclick="onDisplayModeChanged(this.value);"> Horizontal
+                    <input type="radio" name="table" value="vertical" onclick="onDisplayModeChanged(this.value);"> Vertical
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="panel-body panel_body">
+            <script type="text/javascript">
+                var table_a_attributes = JSON.parse("{{rows.0|as_json|safe|escapejs}}");
+                var table_b_attributes = JSON.parse("{{rows.1|as_json|safe|escapejs}}");
+                var labels = JSON.parse("{{labels|as_json|safe|escapejs}}");
+                var ids = JSON.parse("{{ids|as_json|safe|escapejs}}");
+                var tuple_pairs = "{{rows|safe|escapejs}}".split("\n");
+                var attributes = JSON.parse("{{headers.0|as_json|safe|escapejs}}")
+                var tableDisplayModeHorizontal = true;
+                var selectedColumns = [];
+                    //initially all the attributes are selected
+                    for(var attribute in attributes) {
+                        selectedColumns.push(attributes[attribute]);
+                    }
+                </script>
+                <form action="{% url next_url assignment_id %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div id="divTable" class="mydiv"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="cmfooter">
+      &copy; 2019 CLabeler.io, UW-Madison.
+  </footer>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("get_data").className = "completed";
+        document.getElementById("get_labels_task").className = "active";
+    });
+</script>
+<script src="{% static 'libs/save_labels.js' %}"></script>
+{% endblock %}

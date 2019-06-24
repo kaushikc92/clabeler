@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/breadcrumbs_new.css' %}">
+  <title>View Project Hits</title>
+</head>
+<body>
+  <div>
+    <div class="row">
+      <div class="container" style="text-align: center">
+        <div class="row">
+          <strong class="btn btn-lg btn-block text-center" style="background-color: lightgrey; margin-top: 1%"><i class="fa fa-list"></i><b> List of existing HITs for {{project.name}}</b></strong>
+          <div class="col-md-12">
+            <div class="row">
+              <table class="table table-striped">
+                <thead>
+                  <tr style="background-color:silver">
+                    <th scope="col">HIT</th>
+                    <th scope="col">Completed by</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Expires</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for hit in hits %}
+                  <tr>
+                    <td><a href="{% url 'view_hit' hit.id %}">{{forloop.counter}}</a></td>
+                    {% if hit.project.assignment_total == hit.assignment_complete_num %}
+                    <td>{{hit.assignment_complete_num}}</td>
+                    <td>Complete</td>
+                    <td>{{hit.expiry_time}}
+                      {% else %}
+                      <td>{{hit.assignment_complete_num}}</td>
+                      <td>Not Complete</td>
+                      <td>{{hit.expiry_time}}
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+  {% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/breadcrumbs_new.css' %}">
+
+  <title>Project Actions Page</title>
+</head>
+<body>
+  <div class="row">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb breadcrumb-arrow">
+      <li class="" name="bc_project_owner"><a href="#" style="color: lime">Project owner</a></li>
+      <li class="" name="bc_upload"><a href="#" style="color: lime">Create or manage project</a></li>
+    </ol>
+  </div>
+  {% if success == "1" %}
+  <div class="container jumbotron text-center"
+  style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; justify-content: center; background-color: lightgreen; padding: 1em 1em 1em 1em; margin-top: 1%">
+  <h5> Project created successfully.<span>Click<a href="{%url 'workers_hits'%}"> here</a> to work on the
+  project</span></h5>
+</div>
+{% endif %}
+{% if success == "0" %}
+<div class="container jumbotron text-center"
+style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; justify-content: center; background-color: red; padding: 1em 1em 1em 1em; margin-top: 1%">
+<h5> Project creation failed!. File is not uploaded. <span>Click<a href="{%url 'workers_hits'%}"> here</a> to work
+on a different project</span></h5>
+</div>
+{% endif %}
+
+<div>
+  <div class="row ">
+    <div class="text-center; container"
+    style="margin: 5em 10em em 5em; align-content: center; justify-content: center">
+
+    <a href="{% url 'create_project' %}" class="btn btn-lg "
+    style="background-color:rgb(144, 209, 209); margin-left: 40%"><b> Create New Project</b></a>
+  </div>
+</div>
+<div class="row">
+  <div class="container" style="text-align: center">
+    <div class="row">
+      <strong class="btn btn-lg btn-block text-center" style="background-color: lightgrey; margin-top: 1%"><i
+        class="fa fa-list"></i><b> List of existing projects</b></strong>
+
+        <div class="col-md-12">
+
+          <div class="row">
+
+            <table class="table table-striped table-fit">
+              <thead>
+                <tr style="background-color:silver">
+                  <th scope="col">Project ID</th>
+                  <th scope="col">Expiry Date</th>
+                  <th scope="col">Tuples/HIT</th>
+                  <th scope="col">Total HITs</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for project in projects %}
+                <tr>
+                  <td><a href="{% url 'view_project' project.id %}">{{project.name}}</a></td>
+                  <td>{{project.expiry_time}}</td>
+                  <td>{{project.HIT_capacity}}</td>
+                  <td>{{project.assignment_total}}</td>
+                  <td>
+                    <form enctype="multipart/form-data" method="POST" action="{% url 'delete_project' project.id %}">
+                      {% csrf_token %}
+                      <button onclick="deleteAlertMsgFunction()" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+
+                      <a class="btn btn-primary" href="{% url 'edit_project_parameters' project.id %}"><i
+                        class="fa fa-edit"></i></a>
+                      </form>
+                      <script>
+
+                        function deleteAlertMsgFunction() {
+                          alert("Are you sure you want to delete this project ?");
+                        }
+                      </script>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>
+{% endblock %}

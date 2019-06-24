@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load filters %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="{% static 'css/breadcrumbs_new.css' %}">
+  <title>View HIT examples</title>
+</head>
+
+<body>
+  <div>
+    <div class="row">
+      <div class="container" style="text-align: center">
+          <div class="row">
+        <strong class="btn btn-lg btn-block text-center" style="background-color: lightgrey; margin-top: 1%"><i class="fa fa-list"></i><b> Tuple pairs in HIT</b></strong>
+        
+          <div class="col-md-12">
+            <div class="row">
+              <table class="table table-striped">
+                <thead>
+                  <tr style="background-color:silver">
+                  	{% for header in headers %}
+                  		<th scope="col">{{ header }}</th>
+                  	{% endfor %}
+                  	<th scope="col">Label</th>
+                  </tr>
+                </thead>
+                <tbody>
+        					{% for row in hit.label_examples %}
+        					<tr>
+        						{% for header in headers %}
+        							<td>{{ row.example.0|hash:header }}</td>
+        						{% endfor %}
+        						<td>{{ row|hash:'label' }}</td>
+        					</tr>
+
+        					{% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
+
+{% endblock %}

@@ -1,0 +1,248 @@
+.center-align {
+    text-align: center;
+}
+dt, dd {  margin-top: 5px; }
+
+.panel_body {
+    height:100%;
+    width: 100%;
+}
+
+.hide {
+    display: none;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.no-border {
+    border: 0;
+}
+
+.red-font {
+    color: red;
+}
+
+.paginate_footer select {
+    float: left;
+}
+
+.paginate_footer span {
+    float: left;
+}
+
+.paginate_footer ul {
+    float: right;
+}
+
+.table_content {
+    margin-bottom: 5px;
+}
+
+.mydiv {
+    overflow: scroll;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.cell-margin {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+label[for='id_docfile'] {
+    width: 100px;
+    background: #337ab7;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    text-align: center;
+    color: #FFF;
+    cursor: pointer;
+}
+input[type='file'] {
+    display: block;
+}
+.well {
+    background: rgba(0, 0, 0, 0.05);
+}
+.train-success.btn.btn-default.active{
+    background: green;
+    color: white;
+}
+.train-danger.btn.btn-default.active {
+    background: red;
+    color: white;
+}
+.train-info.btn.btn-default.active {
+    background: #337ab7;
+    color: white;
+}
+.train-desc {
+    padding: 10px;
+    background: cyan;
+}
+a.my-tool-tip, a.my-tool-tip:hover, a.my-tool-tip:visited {
+    color: black;
+}
+
+.fragment {
+    font-size: 12px;
+    font-family: tahoma;
+    height: 140px;
+    border: 1px solid #ccc;
+    color: #555;
+    display: block;
+    padding: 10px;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.fragment:hover {
+    box-shadow: 2px 2px 5px rgba(0,0,0,.2);
+
+}
+
+.fragment img {
+    float: left;
+    margin-right: 10px;
+}
+
+
+.fragment h3 {
+    padding: 0;
+    margin: 0;
+    color: #369;
+}
+.fragment h4 {
+    padding: 0;
+    margin: 0;
+    color: #000;
+}
+#close {
+    float:right;
+    display:inline-block;
+    padding:2px 5px;
+    background:#ccc;
+}
+
+.cmfooter {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 10000; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.required_label {
+    color: #ff5733;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  border-bottom: 16px solid #3498db;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.loader1 {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid blue;
+  border-right: 16px solid green;
+  border-bottom: 16px solid red;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.custom-label-btn {
+
+    text-shadow: 0 1px 0 #fff;
+
+    background-repeat: repeat-x;
+
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 1px rgba(0, 0, 0, .075);
+
+    color: #333;
+
+    background-color: #fff;
+
+    border-color: #ccc;
+
+ 
+
+}
+
+ 
+
+.custom-label-btn:hover {
+
+    color: #333;
+
+    background-color: #e6e6e6;
+
+    border-color: #adadad;
+
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

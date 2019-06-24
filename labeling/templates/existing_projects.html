@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Exisiting Project Page</title>
+</head>
+<body>
+    {% if True %}
+    <div>
+        <p>Project created successfully. Click<a href="{%url 'project_actions' %}">here</a> to work on the project</p>
+    </div>
+    {% endif %}
+
+    <div class="container" style="text-align: center">
+        <p class="btn btn-lg btn-block text-center"><b>MY PROJECTS</b></p>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="row">
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr style="background-color:silver">
+                                    <th scope="col">Project ID</th>
+                                    <th scope="col">Expiry Date</th>
+                                    <th scope="col">Tuples/HIT</th>
+                                    <th scope="col">Total HITs</th>
+                                    <th scope="col">FileName</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for project in projects %}
+                                <tr>
+                                    <td>{{project.name}}</td>
+                                    <td>{{project.expiry_time}}</td>
+                                    <td>{{project.HIT_capacity}}</td>
+                                    <td>{{project.assignment_total}}</td>
+                                    <td>{{project.uploaded_file}}</td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>
+{% endblock %}

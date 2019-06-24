@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <title>Index Page</title>
+</head>
+<body>
+  <div class="jumbotron">
+    <div class="col-md-8 offset-md-3">
+      <h1 class="text-align:center;" style="margin-top: 0% ;margin-left: 10%">Welcome to Collaborative Labeller</h1>
+      <h3>Create/manage a project or work on an existing project as worker</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="margin: 2em 0em 2em 0em; align-content: center">
+      <a href="{% url 'project_actions' %}" class="btn btn-lg btn-block "
+      style="background-color:rgb(144, 209, 209); padding: 1em 1em 1em 1em"><b>Project Owner</b></a>
+      <a href="{% url 'workers_hits' %}" class="btn btn-lg btn-block "
+      style="background-color:rgb(144, 209, 209); padding: 1em 1em 1em 1em"><b>Project Worker</b></a>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>
+</body>
+</html>
+{% endblock %}

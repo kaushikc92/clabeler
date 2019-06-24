@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load filters %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <title>Display HIT Tuples</title>
+</head>
+<body>
+  <div class= "container" style="margin-left: 0 ; margin-top: 1%">
+    <div class="row " >
+      <div class="col">
+
+        <a class="btn btn-primary" href="{% url 'workers_hits' %}" >Back</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container" style="text-align: center;margin-left:15%">
+        <div class="row">
+          <h4><strong><b>Project Description:</b></strong> {{project.descriptions}}</h4>
+        </div>
+        <div class="row">
+          <strong class="btn btn-lg btn-block text-center" style="background-color: lightgrey; margin-top: 1%"><i class="fa fa-list"></i><b> Preview</b></strong>
+
+          <div class="col-md-12">
+            <div class="row">
+              <table class="table table-striped">
+                <thead>
+                  <tr style="background-color:silver">
+                    {% for header in headers %}
+                    <th scope="col">{{ header }}</th>
+                    {% endfor %}
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for row in table %}
+                  <tr >
+                    {% for header in headers %}
+                    <td style="width:auto">{{ row.example.0|hash:header }}</td>
+                    {% endfor %}
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+</body>
+</html>
+{% endblock %}

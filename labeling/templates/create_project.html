@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% static "" as baseUrl %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/breadcrumbs_new.css' %}">
+
+    <title>Upload Dataset Page</title>
+</head>
+
+<body>
+    <!-- insert form with show and hide  -->
+    <form enctype="multipart/form-data" method="POST" action="#">
+        {% csrf_token %}
+
+        <div class="jumbotron" id="formpage_1" style="visibility:visible; display: block; padding: 0%">
+            <div class="row">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb breadcrumb-arrow">
+
+                    <li class="" name="bc_project_owner"><a href="#" style="color: lime">Project Owner</a></li>
+                    <li class="" name="bc_upload"><a href="#" style="color: lime">Upload csv file</a></li>
+                    <li class="" name="bc_choose_paramters"><a href="#">Choose project parameters</a></li>
+                </ol>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group col-md-7" id="upload_form_group">
+                        <label class="control-label">Upload file<span class='required_label'>*</span></label>
+                        <div>
+                            {{ upload_file_form.docfile }}
+                            <p class="help-block">
+                                Only <strong>.csv</strong> files.
+                            </p>
+                            <p>
+                                <div id="fileName"></div>
+                                <div id="fileSize"></div>
+                                <div id="fileType"></div>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-7">
+                        <label for="id_description" class="control-label">
+                            Description
+                        </label>
+                        <div>
+                            {{ upload_file_form.description}}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-7" id="upload_btn">
+                        <label class="control-label"></label>
+                        <div>
+                            <!-- <input type="button" name="theButton" id="up-step" style="border-radius: 5px" value="Upload"
+                                class="btn btn-primary disabled"> -->
+                                <span>
+                                    <button class="btn btn-success" onclick="pagechange(1,2); return false">Next</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9">
+                        <div class="form-group col-md-5">
+                            <p>
+                                <h4 style="color: #337ab7;">Please follow this upload format:</h4>
+                                <img id="example_csv" class="img-responsive img-thumbnail"
+                                src="{% static 'images/example_csv.png' %}" />
+                            </p>
+                            <p>
+                                There must be a header row, which lists attribute names separated by comma. Each subsequent
+                                row
+                                lists
+                                data values separated by comma.
+                            </p>
+                        </div>
+                    </div>
+
+                    <script>
+                        function pagechange(frompage, topage) {
+                            document.getElementById('formpage_' + frompage).style.display = 'none';
+                            document.getElementById('formpage_' + frompage).style.visibility = 'hidden';
+                            document.getElementById('formpage_' + topage).style.display = 'block';
+                            document.getElementById('formpage_' + topage).style.visibility = 'visible';
+
+                        }
+                    </script>
+                </div>
+            <!-- <div>
+                <div class="col-sm-10 col-sm-offset-2" id="progress" style="display: none;">
+                    <p style="font-size: medium;" id="upload_message"><i class="fa fa-refresh fa-spin"></i>
+                        Uploading ...</p>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-info"></div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+
+        <div id="formpage_2" class="container" style="visibility:hidden; display: none; margin-left: 0%">
+            <div class="row">
+
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb breadcrumb-arrow">
+
+                    <li class="" name="bc_project_owner"><a href="#" style="color: lime">Project Owner</a></li>
+                    <li class="" name="bc_upload"><a href="#" style="color: lime">Upload csv file</a></li>
+                    <li class="" name="bc_choose_paramters"><a href="#" style="color: lime">Choose project parameters</a></li>
+                </ol>
+            </div>
+            <div class="container">
+                <h3 style:"margin-top: 2%;">Choose parameters for the project</h3>
+                <div class="row" style="margin-top: 2%">
+
+                    <div class="col-md-12">
+
+                        <div class="form-group row">
+                            <label for="projectName" class="col-sm-2 col-form-label">Project name*</label>
+                            <div class="col-sm-10" id="project_name">
+                                {{create_form.project_name}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="worker_count" class="col-sm-2 col-form-label">#Assignment per HIT*</label>
+                            <div class="col-sm-10">
+                                {{create_form.worker_count}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="tuples_count" class="col-sm-2 col-form-label">Tuples per HIT*</label>
+                            <div class="col-sm-10">
+                                {{create_form.tuples_count}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="description" class="col-sm-2 col-form-label">Description</label>
+                            <div class="col-sm-10">
+                                {{create_form.description}}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="approval_rate" class="col-sm-2 col-form-label">Worker HIT rate*</label>
+                            <div class="col-sm-10">
+                                {{create_form.approval_rate}}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="expiryCount" class="col-sm-2 col-form-label">Project expiry in days*</label>
+                            <div class="col-sm-10">
+                                {{create_form.expiry_days_count}}
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row ">
+                            <div class="col-sm-10">
+
+                                <button class="btn btn-primary" onclick="pagechange(2,1); return false">Back</button>
+
+                                <span>
+                                    <button class="btn btn-success" >Create Project</a>
+                                    </span>
+
+                                    <span>
+                                        <button class="btn btn-primary" type="reset" style="margin-left:0.5%">Reset</button>
+                                    </span>
+                                    <!-- <button type="submit" class="btn btn-primary">Sign in</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+    </html>
+    {% endblock %}

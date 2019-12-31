@@ -32,3 +32,6 @@ var/
 
 #intellij
 *.iml
+
+data/
+clabeler/data

@@ -97,13 +97,7 @@ class UploadDatasetForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
 
-        select_options = []
         super(UploadDatasetForm, self).__init__(*args, **kwargs)
-
-        self.fields['wfid'] = forms.CharField(label='Workflow ID',
-                               max_length=100, required=True,)                   
-
-        self.fields['fragid'] = forms.CharField(label='Fragment ID', max_length=100, required=True,)
 
         self.fields['description'] = forms.CharField(label='Description (optional)', max_length=100, required=False,
                                       widget=forms.Textarea(attrs={'placeholder': 'Optionally, describe your table here', 'rows': '4'}))
@@ -111,12 +105,10 @@ class UploadDatasetForm(forms.Form):
         self.fields['docfile'] = forms.FileField(label='Choose file')
 
 
-
 class EditProjectParametersForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
 
-       
         super(EditProjectParametersForm, self).__init__(*args, **kwargs)
 
         self.fields['project_name'] = forms.CharField(label='Project Name*', max_length=200,
@@ -132,7 +124,6 @@ class EditProjectParametersForm(forms.Form):
                                              widget=forms.Textarea(
                                               attrs={'type': 'text', 'class': "form-control", 'rows': "2", 'placeholder': 'Optionally, describe your project here'}))
 
-       
         self.fields['name'] = forms.CharField(label='Project Name*', max_length=200,
                                               help_text='Tooltip description goes here for title',
                                               widget=forms.TextInput(attrs={'type': 'text', 'class': "form-control", 'placeholder': 'Enter Project Name'}))

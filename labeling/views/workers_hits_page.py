@@ -17,6 +17,8 @@ import logging
 import datetime
 
 logger = logging.getLogger(__name__)
+
+
 @method_decorator(login_required, name='dispatch')
 class WorkersHitsPage(View):
 
@@ -34,8 +36,7 @@ class WorkersHitsPage(View):
         projects = self.target(worker)
         resume_projects, select_projects = self.get_user_incomplete_assignments(worker, projects)
         return render(request, 'workers_hits.html', {'select_projects': select_projects,
-                     'resume_projects': resume_projects})
-
+                                                     'resume_projects': resume_projects})
 
     def target(self, worker):
         """
@@ -43,14 +44,14 @@ class WorkersHitsPage(View):
             target worker with user profiles and project settings
         """
         now = datetime.datetime.now()
-        projects = Project.objects.filter(Q(complete_indicator = False),
-                Q(expiry_time__gte = now),
-                Q(approval_rate__lte = worker.approval_rate) | Q(approval_rate = 0))
+        projects = Project.objects.filter(Q(complete_indicator=False),
+                                          Q(expiry_time__gte=now),
+                                          Q(approval_rate__lte=worker.approval_rate) | Q(approval_rate=0))
 
         # exclude project with no more new HITs and all incomplete HITs are already been done by current worker.
-        available_projects = HIT.objects.filter(project__in = projects)\
-                .exclude(user_id_list__icontains = worker.id).values('project__id')
-        projects = projects.exclude((~Q(id__in = available_projects) & Q(table_complete_indicator = True)))
+        available_projects = HIT.objects.filter(project__in=projects) \
+            .exclude(user_id_list__icontains=worker.id).values('project__id')
+        projects = projects.exclude((~Q(id__in=available_projects) & Q(table_complete_indicator=True)))
         return projects
 
     def get_user_incomplete_assignments(self, worker, projects):
@@ -59,10 +60,10 @@ class WorkersHitsPage(View):
             1. For projects in incomplete_assignments, show resume button and disable select button
             2. Otherwise, show select button only.
         """
-        worker_hits = HIT.objects.filter(Q(project__in = projects), Q(user_id_list__icontains = worker.id))
+        worker_hits = HIT.objects.filter(Q(project__in=projects), Q(user_id_list__icontains=worker.id))
         now = datetime.datetime.now()
-        assignments = Assignment.objects.filter(Q(hit__in = worker_hits), Q(complete_indicator = False),
-                Q(expiry_time__gte = now))
+        assignments = Assignment.objects.filter(Q(hit__in=worker_hits), Q(complete_indicator=False),
+                                                Q(expiry_time__gte=now))
         print ([a.id for a in assignments])
         if assignments:
             incomplete_project_set = set([i.hit.project for i in assignments])

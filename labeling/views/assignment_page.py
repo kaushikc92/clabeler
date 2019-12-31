@@ -21,6 +21,7 @@ import logging
 logger = logging.getLogger(__name__)
 HIT_EXPIRY_MINUTES = 120
 
+
 @method_decorator(login_required, name='dispatch')
 class AssignmentPage(View):
     def get(self, request, *args, **kwargs):

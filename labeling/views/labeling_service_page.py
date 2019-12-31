@@ -10,12 +10,12 @@ from collections import Counter
 import logging
 import simplejson
 import json
+
 logger = logging.getLogger(__name__)
 
 
 @method_decorator(login_required, name='dispatch')
 class LabelingServicePage(View):
-
     labels = [
         {
             "name": "Yes", "value": "t"
@@ -47,13 +47,9 @@ class LabelingServicePage(View):
 
         assignment = Assignment.objects.get(pk=assignment_id)
 
-        return_data = {}
-        return_data['next_url'] = 'labeling_service'
-        return_data['assignment_id'] = assignment_id
-        return_data['panel_label'] = 'Label tuple pairs'
-        return_data['labels'] = self.labels
-        return_data['labeling_completed'] = False
-        return_data['headers'] = [assignment.hit.project.csv_header]
+        return_data = {'next_url': 'labeling_service', 'assignment_id': assignment_id,
+                       'panel_label': 'Label tuple pairs', 'labels': self.labels, 'labeling_completed': False,
+                       'headers': [assignment.hit.project.csv_header]}
         ids, rows, counts = self.get_rows_and_counts(assignment.label_examples, assignment.hit.project.csv_header)
         # Trying to access a completed assignment redirects to hits page
         if len(ids) == 0:
@@ -125,6 +121,7 @@ class LabelingServicePage(View):
             self.save_label_to_assignment(assignment, pair_id, label)
 
         ids, rows, counts = self.get_rows_and_counts(assignment.label_examples, assignment.hit.project.csv_header)
+        print('Here ---', ids, rows, counts)
 
         response = {}
 
@@ -136,13 +133,11 @@ class LabelingServicePage(View):
         if save_flag:
             return HttpResponse(json.dumps(response), content_type="application/json")
 
-        # return redirect('labeling_service', project_id, wf_id, ds_name, num_pairs)
-
     def save_label_to_assignment(self, assignment, pair_id, label):
         label_examples = assignment.label_examples
         new_label_examples = []
         for example in label_examples:
-            if(example['id'] == pair_id):
+            if example['id'] == pair_id:
                 print ("here")
                 example['label'] = label
             new_label_examples.append(example)
@@ -163,9 +158,10 @@ class LabelingServicePage(View):
         assignment_complete_num = hit.assignment_complete_num + 1
         hit.assignment_complete_num = assignment_complete_num
         hit.save()
+        print('Check: ', assignment_complete_num, project.assignment_total)
         if assignment_complete_num == project.assignment_total:
             assignment_id_list = hit.assignment_id_list
-            assignments = [Assignment.objects.get(id = i) for i in assignment_id_list]
+            assignments = [Assignment.objects.get(id=i) for i in assignment_id_list]
             hit_examples = self.major_vote(assignments, hit.label_examples)
             hit.label_examples = hit_examples
             hit.save()

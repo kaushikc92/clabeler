@@ -1,11 +1,10 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
-# from . import views
 from views import *
 
 urlpatterns = [
-	url(r'^$', IndexPage.as_view()),
-	url(r'^index/$', IndexPage.as_view(), name='index'),
+    url(r'^$', IndexPage.as_view()),
+    url(r'^index/$', IndexPage.as_view(), name='index'),
     url(r'^project_actions/$', ProjectActionsPage.as_view(), name='project_actions'),
     # url(r'^project_actions/(?P<success>[a-zA-Z]+)/$', ProjectActionsPage.as_view(), name='project_actions'),
     url(r'^project_actions/(?P<success>[0-9]+)/$', ProjectActionsPage.as_view(), name='project_actions'),
@@ -26,8 +25,9 @@ urlpatterns = [
 
     url(r'^edit_project_parameters/$', EditProjectParametersPage.as_view(), name='edit_project_parameters'),
 
-    url(r'^edit_project_parameters/(?P<project_id>[0-9]+)/$', EditProjectParametersPage.as_view(), name='edit_project_parameters'),
+    url(r'^edit_project_parameters/(?P<project_id>[0-9]+)/$', EditProjectParametersPage.as_view(),
+        name='edit_project_parameters'),
     url(r'^review_labelling/$', ReviewLabellingPage.as_view(), name='review_labelling'),
     url(r'^delete_project/(?P<delete_project_id>[0-9]+)/$', DeleteProjectPage.as_view(), name='delete_project'),
-    
+
 ]
